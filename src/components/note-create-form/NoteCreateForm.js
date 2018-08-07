@@ -5,29 +5,35 @@ import React from 'react'
 class NoteCreateForm extends React.Component {
     constructor(props) {
         super(props)
-        this.formComplete = this.formComplete.bind(this)
+        this.formComplete = this.formComplete.bind(this);
+        this.handleTitle = this.handleTitle.bind(this)
+        this.handleContent = this.handleContent.bind(this)
     }
 
     formComplete(event) {
         event.preventDefault();
         // console.log(event.target.name)
         this.props.addNote()
+        document.getElementById('form').reset()
     }
-//onComplete={this.formComplete}
+
+    handleTitle(e) {
+        this.props.updateTitle(e.target.value)
+    }
+    handleContent(e) {
+        this.props.updateContent(e.target.value)
+    }
     render() {
         return (
             <React.Fragment>
                 <h2>Create Note</h2>
-                <form onSubmit={this.formComplete}>
-                    <label>Note Title:</label>
-                <input type="text" onChange={this.props.updateNote}/>
-                    
-                    {/* <br></br> */}
-                    <label>Note Content:</label>
-                <textarea onChange={this.props.updateNote}></textarea>
-                    
-                    {/* <input type="button" onClick={this.formComplete} /> */}
-                    <button>Submit</button>
+                <form id="form" onSubmit={this.formComplete}>
+                
+                <label>Note Title:</label>
+                <input type="text" onChange={this.handleTitle}/>
+                <label>Note Content:</label>
+                <textarea onChange={this.handleContent}></textarea>
+                <button>Submit</button>
 
                 </form>
 

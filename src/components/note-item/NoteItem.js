@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 
 /*
@@ -11,23 +12,34 @@ should display a delete button
 class NoteItem extends React.Component {
     constructor(props) {
         super(props)
-        this.extractId = this.extractId.bind(this)
+        this.removeItem = this.removeItem.bind(this)
     }
 
-    extractId(event) {
+    removeItem(event) {
         // have the note selected already??
         // how to get id to pass to removeNote function from Dashboard element
-        console.log('Delete Note')
+        console.log('Delete Note',event.target.name)
         event.preventDefault();
-        let id = event.target.value
+        let id = event.target.name
         this.props.removeNote(id);
     }
 
     render() {
         return (
             <React.Fragment>
-                <h2>Note Item</h2>
-                <input type="button" name="delete" onClick={this.extractId}/>
+                {/* <h2>Note Item</h2> */}
+                {/* <input type="button" name="delete" onClick={this.extractId}/> */}
+                {
+                    this.props.notesArr.map((id) =>
+                        <li key={id.id}>
+                            {/* <Link to={`/item/${id.id}`}>{id.title}</Link> */}
+                            <h3>{id.title}</h3>
+                            <p>{id.content}</p>
+                            <input type="button" onClick={this.removeItem} name={id.id}value="delete"/>
+
+                        </li>
+                    )
+                }
             </React.Fragment>
         )
     }

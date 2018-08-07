@@ -2,20 +2,7 @@ import React from 'react'
 import NoteList from '../note-list/NoteList.js'
 import NoteCreateForm from '../note-create-form/NoteCreateForm.js'
 import uuidv1 from 'uuid/v1'
-/*
 
-    The Dashboard component should manage the entire application state
-    The state should contain a notes array
-    It should have a bound addNote(note) method that adds a note to state.notes
-        each note that gets added should have the following data
-            id: always should contain the result of uuid.v1()
-            editing: false by default
-            completed: false by default
-            content: user provided content
-            title: user provided title
-    It should have a bound removeNote(note) method that removes a note from state.notes based on its id
-
-*/
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -28,108 +15,110 @@ class Dashboard extends React.Component {
                 content: '',
                 title: '',
             },
-            notes: [{
-                id: 'fakeID',
-                editing: false,
-                completed: false,
-                content: 'this is the content',
-                title: 'TITLE',
-            }]
+            notes: []
         }
         this.addNote = this.addNote.bind(this)
         this.removeNote = this.removeNote.bind(this)
-        this.updateNote = this.updateNote.bind(this)
+        this.updateTitle = this.updateTitle.bind(this)
+        this.updateContent = this.updateContent.bind(this)
     }
 
-    updateNote(event) {
-        let editing, completed = false;
-        let id = uuidv1();
-        console.log(this.state.note)
+    updateTitle(event) {
+        let id = '';
+        let completed = false;
+        let editing= true;
+        let title = event;
 
-        this.setState = {
-            note: {
-                id,
-                title: event.target.value,
-                content: event.target.value,
-                editing,
-                completed
-            }
-        }
+        this.setState(
+            {...this.state, note: {...this.state.note, title, editing, id, completed}}
+        )
+    }
+
+    updateContent(event) {
+        let id = '';
+        let completed = false;
+        let editing= true;
+        let content = event;
+
+        this.setState(
+            {...this.state, note: {...this.state.note, content, editing, id, completed}}
+        )
     }
 
     addNote() {
-        // event.preventDefault();
+        //dont want to use the current one / make a copy and manipulate that
+        let id = uuidv1();
+        let completed = true;
+        let editing= false;
+        let newNote = {...this.state.note, id, completed, editing}
+        //add the new note into our array
 
-        /*
-        the object equivalent
 
-        addItem(data) {
-        let item = {};
-        item[data.id] = data.text;
-        this.setState( Object.assign(this.state.items,item) );
-        }
+        // this.setState(
 
-        */
-        // not a function?
+            // {...this.state, 
+            // note: {...this.state.note, id, editing, completed}, 
+            // notes : this.state.notes.push(this.state.note)}, () => {console.log(this.state)}
+            // not push because push returns the length value
+            // we dont want to 
+        // )
+
+        // want all the old array
+        // first argument is always previous state and second argument is props?? and you can name them whatever
+        // have to put in return and wrap in curly braces
+        // setState expects an object so the goal of the function should be to reutrn an object
+        // setState can take a CB as a second argument 
         this.setState((prevState) => {
-            return { note: {
-                // id : uuidv1(),
-                editing : !prevState.editing,
-                completed : !prevState.completed
-            }
-          };
-        });
-
-        console.log('SUBMIT', this.state.note)
-
-        // let notes = this.state.notes.push(this.state.note)
-        // console.log('ARRAY Before', notes)
-        console.log('ARRAY state', this.state.notes)
-
-
-        this.setState((prevState) => {
-            return { notes : prevState.notes.push(this.state.note)};
-        });
-
-        // console.log('ARRAY After', this.state.notesArr)
+            return {notes : [...prevState.notes, newNote]}
+        }, () => console.log(this.state))
     }
 
     removeNote(note) {
         // removes a note from state.notes based on its id
         // might not have to do note.id but just note
-        console.log('removeNote')
-        // let index = this.state.notes.indexOf(note.id)
-        // console.log(index)
+        // console.log('removeNote')
+        let newArr = [...this.state.notes]
+
+        let index;
+        console.log('index',index)
+
+        for ( let i of this.state.notes) {
+          if(i['id'] === note) {
+            index = newArr.indexOf(i)
+            // index = this.state.notes.indexOf(i)
+          }
+        }
+        console.log('INDEX',index)
+
         // let notes = this.state.notes.splice(index, 1)
-        let notes = this.state.notes.splice(0, 1)
+        // let notes = this.state.notes.splice(0, note)
+        // let newArr = this.state.notes.splice(index, 1)
+        newArr.splice(index,1)
+        // console.log('newArr',newArr)
 
-        console.log(notes)
+        // console.log('SPLICE',notes)
 
-        this.setState({
-            notes
-        })
-        console.log('DELETE after',notes)
+        // this.setState((prevState) => {
+        //     return {notes : [...prevState.notes, newNote]}
+        // }, () => console.log(this.state))
+
+        this.setState(() => ({
+            notes: newArr
+        }))
+          
+
+        // this.setState({
+        //     notes
+        // })
+        // console.log('DELETE after',notes)
 
     }
-
-    /*
-    do this 
-
-        componentDidUpdate(prevProps) {
-            // Typical usage (don't forget to compare props):
-            if (this.props.userID !== prevProps.userID) {
-                this.fetchData(this.props.userID);
-            }
-        }
-
-    */
-
-    //might need to send attribute with addNote?
     render() {
         return (
             <React.Fragment>
                 <h2>Dashboard</h2>
-                <NoteCreateForm updateNote={this.updateNote} addNote={this.addNote} />
+                <NoteCreateForm updateContent={this.updateContent} updateTitle={this.updateTitle} addNote={this.addNote} />
+
                 <NoteList notesArr={this.state.notes} removeNote={this.removeNote} />
             </React.Fragment>
         )
