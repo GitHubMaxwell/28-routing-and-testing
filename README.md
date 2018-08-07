@@ -3,7 +3,7 @@
 
 ## Submission
 
-GitHub PR:
+GitHub PR: https://github.com/GitHubMaxwell/28-routing-and-testing/pull/1
 TRAVIS: i havent tested it yet
 
 
