@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Dashboard/> and <NoteCreateForm/> Initial State Snapshot Test Dashboard Snapshot Test 1`] = `
+Array [
+  <h2>
+    Dashboard
+  </h2>,
+  <h2>
+    Create Note
+  </h2>,
+  <form
+    id="form"
+    onSubmit={[Function]}
+  >
+    <label>
+      Note Title:
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+    />
+    <label>
+      Note Content:
+    </label>
+    <textarea
+      onChange={[Function]}
+    />
+    <button>
+      Submit
+    </button>
+  </form>,
+  <h2>
+    Note List
+  </h2>,
+  <ul />,
+]
+`;
+
+exports[`<Dashboard/> and <NoteCreateForm/> Initial State Snapshot Test NoteCreateForm Snapshot Test 1`] = `
+Array [
+  <h2>
+    Create Note
+  </h2>,
+  <form
+    id="form"
+    onSubmit={[Function]}
+  >
+    <label>
+      Note Title:
+    </label>
+    <input
+      onChange={[Function]}
+      type="text"
+    />
+    <label>
+      Note Content:
+    </label>
+    <textarea
+      onChange={[Function]}
+    />
+    <button>
+      Submit
+    </button>
+  </form>,
+]
+`;

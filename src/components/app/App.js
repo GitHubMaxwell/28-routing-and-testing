@@ -25,6 +25,7 @@ class App extends React.Component {
                                 <li className="navitem"><Link to={'/'}>Home</Link></li>
                                 <li className="navitem"><Link to={'/dashboard'}>Dashboard</Link></li>
                             </ul>
+                            <h2>Testing Enzyme</h2>
                         </nav>
                         <Route exact path="/" component={Landing} />
                         <Route exact path="/dashboard" component={Dashboard} />
